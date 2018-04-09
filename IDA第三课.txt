@@ -1,0 +1,149 @@
+id0：二叉树数据库
+id1：文件包含描述每个程序字节的标记
+
+nam：包含IDA NAME窗口的数据库
+til：储存本地数据库有关信息
+
+program database：PDB
+打开IDA后储存为idb文件
+
+IDA has found unpacked version of database C:\DriverTest\sys\xxxx\xxx.idb on disk
+.please choose
+three button:
+restore continue cancel
+
+数据库奔溃：
+
+Datafor ifle c:\xxx\xxx\xxx.id0 isn't closed,do you want IDA to repair it?
+
+please note that repaired database may still have problem.
+
+the best solution is to use packed database or a backup
+
+four button：
+
+yes no cancel help
+
+第五课：
+
+Layout Graph：
+
+Sub_xxx:子程序例程
+loc_xxx:第几处的指令
+byte_xxx:八位数据
+word_xxx:16位数据
+unk_xxx:未知数据
+
+c:字符串
+f:常规函数
+
+第6课：
+主要窗口：
+IDA View-A
+导航条
+Names
+Strings
+
+次要窗口：
+Hex View-A
+Exports
+Imports
+Structures
+Enums
+Functions
+
+KdPrint是微软常用方法的查询文件
+
+第七课：
+
+签名主要用于代码提醒，自己加注释
+
+类型库窗口：头文件，文件结构布局大小
+
+function窗口：显示方法的调用和被调用
+
+问题窗口：显示反汇编遇到的一些困难以及如何解决
+
+第八课：
+反汇编导航
+标号 loc_135C3：ida自动为其做生成，将程序段之前进行分段
+
+g按键进行跳转
+
+第九课：
+栈帧stack frame
+
+1、先保护现场
+2、将参数安装调用约定放在被运行栈帧上，这个栈帧的栈顶指针就会发生改变
+3、如果有必要，调用函数会配置一个栈指针，保存调用方希望保持不变的内容（寄存器值）
+4、被调用函数为它可能需要的任何局部变量发配空间，需要栈帧栈顶向上开辟空间
+5、被调用函数返回值存放在EAX或者存放在可以立即被调用到的地方
+6、一旦函数完成其他操作，任何局部变量都释放了
+7、调用地方如果重新获得控制权，删除在栈中开辟空间
+8、完成“序言（3,4）”“过程（5,6）”“尾声（6,7）”
+
+
+C的调用约定：_cdecl(参数从右向左一次入栈)，清理方式，调用者清理（“老子清理儿子”）
+
+ 对于参数可变化的：printf("xxx");
+
+VOID demo()
+==>
+VOID demo_cdecl(int w,int x,int y,int z)
+
+C调用
+asm
+push w
+push x
+push y
+push z
+call demo(进入了函数，开始执行了。。。）
+add esp,16    4*sizeof(int)
+  
+标准调用_stdcall
+VOID demo_stdcall(int w,int x,int y,int z)
+push w
+push x
+push y
+push z
+call demo(进入了函数，开始执行了。。。）
+ret 16    4*sizeof(int)
+
+快速调用_fastcall
+VOID demo_fastcall(int w,int x,int y,int z)
+前两个（ECX=w，EDX=x）参数将被分配给ECX，EDX
+剩下的都被安装_stdcall调用约定
+ret 8
+
+C++调用约定
+使用this指针
+VC提供了thiscall调用，将this传递给ECX
+GC++中被当做静态，存放在栈顶
+
+第十课：
+栈帧二
+
+
+第十四课
+操纵函数
+
+第十八课
+交叉引用
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
